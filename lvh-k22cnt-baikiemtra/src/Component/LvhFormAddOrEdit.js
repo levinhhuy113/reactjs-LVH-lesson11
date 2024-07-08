@@ -1,61 +1,59 @@
 import React, { useEffect, useState } from 'react';
-import axiosInstance from '../Api/lvhApi'; 
+import axios from '../Api/lvhApi';
 
 export default function LvhSinhVienAddOrEdit({ initialValues, onLvhClose, onLvhSubmitForm }) {
   const [lvhId, setLvhId] = useState(initialValues ? initialValues.id : '');
-  const [lvhMaSV, setLvhMaSV] = useState(initialValues ? initialValues.LvhMaSV : '');
-  const [lvhHoSV, setLvhHoSV] = useState(initialValues ? initialValues.LvhHoSV : '');
-  const [lvhTenSV, setLvhTenSV] = useState(initialValues ? initialValues.LvhTenSV : '');
-  const [lvhPhai, setLvhPhai] = useState(initialValues ? initialValues.LvhPhai : '');
-  const [lvhNS, setLvhNS] = useState(initialValues ? initialValues.LvhNS : '');
-  const [lvhNoiSinh, setLvhNoiSinh] = useState(initialValues ? initialValues.LvhNoiSinh : '');
-  const [lvhMaKH, setLvhMaKH] = useState(initialValues ? initialValues.LvhMaKH : '');
-  const [lvhHocBong, setLvhHocBong] = useState(initialValues ? initialValues.LvhHocBong : '');
-  const [lvhDTB, setLvhDTB] = useState(initialValues ? initialValues.LvhDTB : '');
+  const [lvhMaSV, setLvhMaSV] = useState(initialValues ? initialValues.lvhMaSV : '');
+  const [lvhHoSV, setLvhHoSV] = useState(initialValues ? initialValues.lvhHoSV : '');
+  const [lvhTenSV, setLvhTenSV] = useState(initialValues ? initialValues.lvhTenSV : '');
+  const [lvhPhai, setLvhPhai] = useState(initialValues ? initialValues.lvhPhai : '');
+  const [lvhNgaySinh, setLvhNgaySinh] = useState(initialValues ? initialValues.lvhNgaySinh : '');
+  const [lvhNoiSinh, setLvhNoiSinh] = useState(initialValues ? initialValues.lvhNoiSinh : '');
+  const [lvhMaKH, setLvhMaKH] = useState(initialValues ? initialValues.lvhMaKH : '');
+  const [lvhHocBong, setLvhHocBong] = useState(initialValues ? initialValues.lvhHocBong : '');
+  const [lvhDTB, setLvhDTB] = useState(initialValues ? initialValues.lvhDTB : '');
 
   useEffect(() => {
     if (initialValues) {
       setLvhId(initialValues.id);
-      setLvhMaSV(initialValues.LvhMaSV);
-      setLvhHoSV(initialValues.LvhHoSV);
-      setLvhTenSV(initialValues.LvhTenSV);
-      setLvhPhai(initialValues.LvhPhai);
-      setLvhNS(initialValues.LvhNS);
-      setLvhNoiSinh(initialValues.LvhNoiSinh);
-      setLvhMaKH(initialValues.LvhMaKH);
-      setLvhHocBong(initialValues.LvhHocBong);
-      setLvhDTB(initialValues.LvhDTB);
+      setLvhMaSV(initialValues.lvhMaSV);
+      setLvhHoSV(initialValues.lvhHoSV);
+      setLvhTenSV(initialValues.lvhTenSV);
+      setLvhPhai(initialValues.lvhPhai);
+      setLvhNgaySinh(initialValues.lvhNgaySinh);
+      setLvhNoiSinh(initialValues.lvhNoiSinh);
+      setLvhMaKH(initialValues.lvhMaKH);
+      setLvhHocBong(initialValues.lvhHocBong);
+      setLvhDTB(initialValues.lvhDTB);
     }
   }, [initialValues]);
 
   const handleLvhClose = () => {
-    onLvhClose(false);
+    onLvhClose();
   };
 
   const handleLvhSubmit = async (event) => {
     event.preventDefault();
     const formData = {
-      LvhMaSV: lvhMaSV,
-      LvhHoSV: lvhHoSV,
-      LvhTenSV: lvhTenSV,
-      LvhPhai: lvhPhai,
-      LvhNS: lvhNS,
-      LvhNoiSinh: lvhNoiSinh,
-      LvhMaKH: lvhMaKH,
-      LvhHocBong: lvhHocBong,
-      LvhDTB: lvhDTB,
+      id: lvhId,
+      lvhMaSV,
+      lvhHoSV,
+      lvhTenSV,
+      lvhPhai,
+      lvhNgaySinh,
+      lvhNoiSinh,
+      lvhMaKH,
+      lvhHocBong,
+      lvhDTB,
     };
 
     if (lvhId) {
-      // Update existing user
-      formData.id = lvhId;
-      await axiosInstance.put(`/${lvhId}`, formData);
+      await axios.put(`/${lvhId}`, formData);
     } else {
-      // Add new user
-      await axiosInstance.post("/", formData);
+      await axios.post("/", formData);
     }
 
-    onLvhSubmitForm(false);
+    onLvhSubmitForm();
   };
 
   return (
@@ -79,7 +77,7 @@ export default function LvhSinhVienAddOrEdit({ initialValues, onLvhClose, onLvhS
         </div>
         <div className="input-group mb-3">
           <span className="input-group-text">Ngày sinh</span>
-          <input type="text" className="form-control" value={lvhNS} onChange={(ev) => setLvhNS(ev.target.value)} />
+          <input type="text" className="form-control" value={lvhNgaySinh} onChange={(ev) => setLvhNgaySinh(ev.target.value)} />
         </div>
         <div className="input-group mb-3">
           <span className="input-group-text">Nơi sinh</span>

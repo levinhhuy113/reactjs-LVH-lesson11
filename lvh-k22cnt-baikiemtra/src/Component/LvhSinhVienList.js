@@ -1,7 +1,7 @@
 import React from 'react';
 
-export default function LvhSinhVienList({ render, handleEdit, handleDelete }) {
-
+export default function LvhSinhVienList({ renderLvhSinhVienList, handleEdit, handleDelete }) {
+  
   const handleDeleteSV = (id) => {
     handleDelete(id);
   };
@@ -10,22 +10,22 @@ export default function LvhSinhVienList({ render, handleEdit, handleDelete }) {
     handleEdit(id);
   };
 
-  let lvhElementUser = renderLvhListUsers.map((lvhUser, index) => {
+  let lvhElementUser = renderLvhSinhVienList.map((LvhSinhVien, index) => {
     return (
-      <tr key={lvhUser.id}>
-        <td>{lvhUser.id}</td>
-        <td>{lvhUser.LvhMaSV}</td>
-        <td>{lvhUser.LvhHoSV}</td>
-        <td>{lvhUser.LvhTenSV}</td>
-        <td>{lvhUser.LvhPhai}</td>
-        <td>{lvhUser.LvhNS}</td>
-        <td>{lvhUser.LvhNoiSinh}</td>
-        <td>{lvhUser.LvhMaKH}</td>
-        <td>{lvhUser.LvhHocBong}</td>
-        <td>{lvhUser.LvhDTB}</td>
+      <tr key={LvhSinhVien.id}>
+        <td>{LvhSinhVien.id}</td>
+        <td>{LvhSinhVien.lvhMaSV}</td>
+        <td>{LvhSinhVien.lvhHoSV}</td>
+        <td>{LvhSinhVien.lvhTenSV}</td>
+        <td>{LvhSinhVien.lvhPhai}</td>
+        <td>{LvhSinhVien.lvhNgaySinh}</td>
+        <td>{LvhSinhVien.lvhNoiSinh}</td>
+        <td>{LvhSinhVien.lvhMaKH}</td>
+        <td>{LvhSinhVien.lvhHocBong}</td>
+        <td>{LvhSinhVien.lvhDiemTrungBinh}</td>
         <td>
-          <button type='button' className='btn btn-danger mx-3' onClick={() => handleDeleteSV(lvhUser.id)}>Xóa</button>
-          <button type='button' className='btn btn-warning' onClick={() => handleEditSV(lvhUser.id)}>Sửa</button>
+          <button type='button' className='btn btn-danger mx-3' onClick={() => handleDeleteSV(LvhSinhVien.id)}>Xóa</button>
+          <button type='button' className='btn btn-warning' onClick={() => handleEditSV(LvhSinhVien.id)}>Sửa</button>
         </td>
       </tr>
     )

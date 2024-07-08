@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import LvhSinhVienList from './Component/LvhSinhVienList'; 
-import axiosInstance from './Api/lvhApi'; 
+import LvhSinhVienList from './Component/LvhSinhVienList';
+import axios from './Api/lvhApi';
 import LvhSinhVienAddOrEdit from './Component/LvhFormAddOrEdit';
-
 
 export default function LvhApp() {
   const [lvhListSinhvien, setLvhListSinhvien] = useState([]);
@@ -10,7 +9,7 @@ export default function LvhApp() {
   const [lvhSelectedUser, setLvhSelectedUser] = useState(null);
 
   const lvhGetAllUser = async () => {
-    const lvhResponse = await axiosInstance.get("/"); 
+    const lvhResponse = await axios.get("/LvhSinhVien");
     setLvhListSinhvien(lvhResponse.data);
   }
 
@@ -29,9 +28,9 @@ export default function LvhApp() {
 
   const lvhHandleSubmit = async (formData) => {
     if (formData.id) {
-      await axiosInstance.put(`/${formData.id}`, formData);
+      await axios.put(`/${formData.id}`, formData);
     } else {
-      await axiosInstance.post("/", formData);
+      await axios.post("/", formData);
     }
     lvhGetAllUser();
     setLvhAddOrEdit(false);
@@ -47,28 +46,28 @@ export default function LvhApp() {
 
   const lvhHandleDelete = async (userId) => {
     if (window.confirm("Bạn có chắc chắn muốn xóa sinh viên này?")) {
-      await axiosInstance.delete(`/${userId}`);
+      await axios.delete(`/${userId}`);
       lvhGetAllUser();
     }
   };
 
   return (
     <div className="container border my-3">
-    <h1>Làm việc với API</h1>
-    <hr />
-    <button className="btn btn-primary mb-3" onClick={lvhHandleAddNew}>Thêm mới</button>
-    {lvhAddOrEdit && (
-      <LvhSinhVienAddOrEdit
-        initialValues={lvhSelectedUser}
-        onLvhClose={lvhHandleClose}
-        onLvhSubmitForm={lvhHandleSubmit}
+      <h1>Làm việc với API</h1>
+      <hr />
+      <button className="btn btn-primary mb-3" onClick={lvhHandleAddNew}>Thêm mới</button>
+      {lvhAddOrEdit && (
+        <LvhSinhVienAddOrEdit
+          initialValues={lvhSelectedUser}
+          onLvhClose={lvhHandleClose}
+          onLvhSubmitForm={lvhHandleSubmit}
+        />
+      )}
+      <LvhSinhVienList
+        renderLvhSinhVienList={lvhListSinhvien}
+        handleEdit={lvhHandleEdit}
+        handleDelete={lvhHandleDelete}
       />
-    )}
-    <LvhSinhVienList
-      renderLvhListUsers={lvhListSinhvien}
-      handleEdit={lvhHandleEdit}
-      handleDelete={lvhHandleDelete}
-    />
-  </div>
+    </div>
   );
 }
